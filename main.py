@@ -8,18 +8,29 @@ def check_tasks(token):
   request_headers = {"Authorization":
     authoriz_template.format(token)}
   request_params = {
-  "units": -1
+    "timeout": 60
   }
   request_url = 'https://dvmn.org/api/long_polling/'
   #request_url = 'https://dvmn.org/api/user_reviews/'
 
-  response = requests.get(request_url,
-    headers = request_headers
-    #,     params = request_params
+  response = requests.get(request_url, 
+    headers = request_headers,
+    params = request_params
     )
   response.raise_for_status()
   tasks_structure = response.json()
-
+  
+  while True:
+    request_params = {
+      "timeout": 60
+    }
+    response = requests.get(request_url, 
+      headers = request_headers,
+      params = request_params
+      )
+    for message in response:
+      bot.answer(message)
+	  
   return tasks_structure
 
 
@@ -27,3 +38,4 @@ if __name__ == '__main__':
   token = os.getenv("DEVMAN_TOKEN")
   print_info = check_tasks(token)
   print(print_info)
+
