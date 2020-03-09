@@ -10,8 +10,8 @@ def check_tasks(token):
   request_params = {
   "units": -1
   }
-  #request_url = 'https://dvmn.org/api/long_polling/'
-  request_url = 'https://dvmn.org/api/user_reviews/'
+  request_url = 'https://dvmn.org/api/long_polling/'
+  #request_url = 'https://dvmn.org/api/user_reviews/'
 
   response = requests.get(request_url,
     headers = request_headers
