@@ -7,26 +7,27 @@ def check_tasks(token):
   authoriz_template = "Token {}"
   request_headers = {"Authorization":
     authoriz_template.format(token)}
-  request_params = {
-    "timeout": 60
+  #request_params = {
+  #  "timeout": 60
   }
   request_url = 'https://dvmn.org/api/long_polling/'
   #request_url = 'https://dvmn.org/api/user_reviews/'
 
   response = requests.get(request_url, 
     headers = request_headers,
-    params = request_params
-    )
+#    params = request_params
+     timeout = 60
+   )
   response.raise_for_status()
   tasks_structure = response.json()
   
   while True:
-    request_params = {
-      "timeout": 60
+#    request_params = {
+#      "timeout": 60
     }
     response = requests.get(request_url, 
       headers = request_headers,
-      params = request_params
+      timeout = 60
       )
     for message in response:
       bot.answer(message)
